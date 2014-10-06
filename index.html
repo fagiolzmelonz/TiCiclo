@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TiCiclo - Piste ciclabili, nolegio bici, negozi e officine per la tua due ruote a pedali</title>
+		<style>
+			html, body, #map-canvas {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+		</style>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+		<!--script type="text/javascript">
+						if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/blackberry/i))|| (navigator.userAgent.match(/nokia/i)) || (navigator.userAgent.match(/android/i)) || (navigator.userAgent.match(/symbian/i)))
+			{
+			location.href='http://m.ticiclo.it';
+			}
+		</script -->
+		<script>
+			var map;
+			var bologna = new google.maps.LatLng(44.4923683, 11.3446459, 15);
+
+			var MY_MAPTYPE_ID = 'custom_style';
+
+			function initialize() {
+
+				var featureOpts = [{
+					"stylers" : [{
+						"visibility" : "on"
+					}]
+				}, {
+					"featureType" : "road",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#ffffff"
+					}]
+				}, {
+					"featureType" : "road.arterial",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#fee379"
+					}]
+				}, {
+					"featureType" : "road.highway",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#fee379"
+					}]
+				}, {
+					"featureType" : "landscape",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#f3f4f4"
+					}]
+				}, {
+					"featureType" : "water",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#7fc8ed"
+					}]
+				}, {}, {
+					"featureType" : "road",
+					"elementType" : "labels",
+					"stylers" : [{
+						"visibility" : "on"
+					}]
+				}, {
+					"featureType" : "poi.park",
+					"elementType" : "geometry.fill",
+					"stylers" : [{
+						"visibility" : "on"
+					}, {
+						"color" : "#83cead"
+					}]
+				}, {
+					"elementType" : "labels",
+					"stylers" : [{
+						"visibility" : "on"
+					}]
+				}, {
+					"featureType" : "landscape.man_made",
+					"elementType" : "geometry",
+					"stylers" : [{
+						"weight" : 0.9
+					}, {
+						"visibility" : "on"
+					}]
+				}]
+
+				var mapOptions = {
+					zoom : 15,
+					center : bologna,
+					mapTypeControlOptions : {
+						mapTypeIds : [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+					},
+					mapTypeId : MY_MAPTYPE_ID
+				};
+
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+				var styledMapOptions = {
+					name : 'Custom Style'
+				};
+
+				var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+
+				map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+
+				var weatherLayer = new google.maps.weather.WeatherLayer({
+					temperatureUnits : google.maps.weather.TemperatureUnit.FAHRENHEIT
+				});
+				weatherLayer.setMap(map);
+
+				var cloudLayer = new google.maps.weather.CloudLayer();
+				cloudLayer.setMap(map);
+
+				var bikeLayer = new google.maps.BicyclingLayer();
+				bikeLayer.setMap(map);
+
+			}
+
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+
+		</script>
+	</head>
+	<body>
+		<div id="map-canvas"></div>
+	</body>
+</html>
+
